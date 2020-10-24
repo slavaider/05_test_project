@@ -15,14 +15,14 @@
                 Наведи на меня курсор на пару секунд,
                 чтобы увидеть динамически связанное значение title!
             </h2>
-            <ol class="list-group col-3">
-                <li class="list-group-item" v-for="(todo,index) in todos" :key="todo">{{index+1}}.{{todo.text}}</li>
+            <ol class="list-group col-4">
+                <li class="list-group-item" v-for="(todo,index) in todos" v-bind:key="todo.text">{{index+1}}.{{todo.text}}</li>
             </ol>
             <br>
-            <app-todo class="list-group col-3"
+            <app-todo class="list-group col-4"
                       v-for="item in groceryList"
                       v-bind:todo="item"
-                      :key="item.id"
+                      v-bind:key="item.id"
             ></app-todo>
 
             <base-layout>
@@ -41,6 +41,38 @@
                     <p>Некая контактная информация</p>
                 </template>
             </base-layout>
+            <div>
+                <input type="checkbox" id="jack" value="Джек" v-model="checkedNames">
+                <label for="jack">Джек</label>
+                <input type="checkbox" id="john" value="Джон" v-model="checkedNames">
+                <label for="john">Джон</label>
+                <input type="checkbox" id="mike" value="Майк" v-model="checkedNames">
+                <label for="mike">Майк</label>
+                <br>
+                <span>Отмеченные имена: {{ checkedNames }}</span>
+            </div>
+            <div>
+                <input type="radio" id="one" value="Один" v-model="picked">
+                <label for="one">Один</label>
+                <br>
+                <input type="radio" id="two" value="Два" v-model="picked">
+                <label for="two">Два</label>
+                <br>
+                <span>Выбрано: {{ picked }}</span>
+            </div>
+            <div>
+                <label>
+                    <select v-model="selected">
+                        <option disabled value="">Выберите один из вариантов</option>
+                        <option>1A</option>
+                        <option>2Б</option>
+                        <option>3В</option>
+                    </select>
+                </label>
+                <span>Выбрано: {{ selected }}</span>
+            </div>
+            <p>{{searchText}}</p>
+            <custom-input v-model="searchText"></custom-input>
         </div>
     </div>
 </template>
@@ -50,12 +82,17 @@
     import Car from './components/car/car.vue'
     import Todo from './components/todo/todo.vue'
     import baseLayout from './components/layout/layout'
+    import customInput from './components/custom-input/custom-input'
 
 
     export default {
         name: 'App',
         data() {
             return {
+                searchText: '123',
+                selected: '',
+                picked: '',
+                checkedNames: [],
                 firstName: 'Foo',
                 lastName: 'Bar',
                 carName: 'Car from parent',
@@ -76,7 +113,8 @@
         components: {
             'app-car': Car,
             'app-todo': Todo,
-            'base-layout': baseLayout
+            'base-layout': baseLayout,
+            'custom-input': customInput
 
         },
         computed: {
