@@ -2,11 +2,17 @@
     <div class="car">
         <h3>Name: {{carName}} \ {{reverse}} </h3>
         <h3>Year: {{carYear}}</h3>
-        <div class="btn btn-success" @click="changeName">change</div>
+        <div class="d-flex justify-content-between">
+            <div class="btn btn-success" @click="changeName">change</div>
+            <div class="btn btn-success" @click="changeFunc">Change from parent</div>
+            <div class="btn btn-success" @click="update_counter">update_counter</div>
+        </div>
     </div>
 </template>
 
 <script>
+    import {EventEmitter} from "@/main";
+
     export default {
         // props:['carName','carYear'],
         props: {
@@ -15,7 +21,8 @@
                 required: true,
                 default: 'Default Name',
             },
-            'carYear': Number
+            'carYear': Number,
+            'changeFunc': Function
         },
         data() {
             return {}
@@ -24,6 +31,10 @@
             changeName: function () {
                 this.carName = '123'
                 this.$emit('nameChanged', this.carName)
+            },
+            update_counter() {
+                // this.$emit('counterChanged', this.counter + 1)
+                EventEmitter.$emit('counterChanged', 3)
             }
         },
         computed: {
@@ -35,7 +46,6 @@
 </script>
 <style scoped>
     .car {
-
         border: 1px solid black;
         margin: 10px;
         padding: 10px;

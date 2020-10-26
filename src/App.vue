@@ -8,15 +8,22 @@
         <div class="container">
             {{something}}
             <br>
-            {{fullName}}
+            <app-counter
+            ></app-counter>
             <h1> Parent: {{carName}}</h1>
-            <app-car :carName="carName" :carYear="carYear" @nameChanged="carName=$event"></app-car>
+            <app-car :carName="carName"
+                     :carYear="carYear"
+                     @nameChanged="carName=$event"
+                     :changeFunc="change_name_to_audi"
+            ></app-car>
             <h2 :title="title">
                 Наведи на меня курсор на пару секунд,
                 чтобы увидеть динамически связанное значение title!
             </h2>
             <ol class="list-group col-4">
-                <li class="list-group-item" v-for="(todo,index) in todos" v-bind:key="todo.text">{{index+1}}.{{todo.text}}</li>
+                <li class="list-group-item" v-for="(todo,index) in todos" v-bind:key="todo.text">
+                    {{index+1}}.{{todo.text}}
+                </li>
             </ol>
             <br>
             <app-todo class="list-group col-4"
@@ -83,10 +90,15 @@
     import Todo from './components/todo/todo.vue'
     import baseLayout from './components/layout/layout'
     import customInput from './components/custom-input/custom-input'
-
+    import appCounter from './components/counter/counter'
 
     export default {
         name: 'App',
+        methods: {
+            change_name_to_audi() {
+                this.carName = 'audi'
+            },
+        },
         data() {
             return {
                 searchText: '123',
@@ -114,7 +126,8 @@
             'app-car': Car,
             'app-todo': Todo,
             'base-layout': baseLayout,
-            'custom-input': customInput
+            'custom-input': customInput,
+            'app-counter': appCounter
 
         },
         computed: {
